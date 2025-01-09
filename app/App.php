@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Http\Request;
-use App\Router\Router;
+use App\Request\Request;
+use App\Core\Router\Router;
 
 class App
 {

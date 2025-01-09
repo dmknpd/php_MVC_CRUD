@@ -1,8 +1,7 @@
 <?php
 
-use App\Controllers\Jopa;
 use App\Controllers\PlantController;
-use App\Router\Route;
+use App\Core\Router\Route;
 
 return [
   Route::get('/', [PlantController::class, 'index']),
