@@ -1,7 +1,7 @@
 <?php
 
 use App\Controllers\PlantController;
-use App\Core\Router\Route;
+use Core\Router\Route;
 
 return [
   Route::get('/', [PlantController::class, 'index']),

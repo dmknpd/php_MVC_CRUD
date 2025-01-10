@@ -2,15 +2,21 @@
 
 namespace App;
 
-use App\Request\Request;
-use App\Core\Router\Router;
+use Core\Container\Container;
 
 class App
 {
+  private Container $container;
+
+  public function __construct()
+  {
+    $this->container = new Container();
+  }
+
   public function run(): void
   {
-    $router = new Router();
-    $request = Request::createFromGlobals();
+    $router = $this->container->router;
+    $request = $this->container->request;
 
     $uri = $request->uri();
     $method = $request->method();
