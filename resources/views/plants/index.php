@@ -1,7 +1,12 @@
 <?php
 
-require APP_PATH . "/resources/views/components/header.php";
+/**
+ * @var \Core\View\View $view
+ */
+?>
 
-echo "<h1>Home</h1>";
+<?php $view->component('header') ?>
 
-require APP_PATH . "/resources/views/components/footer.php";
+<h1>Home</h1>
+
+<?php $view->component('footer') ?>
