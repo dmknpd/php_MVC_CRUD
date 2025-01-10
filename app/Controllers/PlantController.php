@@ -2,10 +2,12 @@
 
 namespace App\Controllers;
 
-class PlantController
+use Core\Controller\Controller;
+
+class PlantController extends Controller
 {
   public function index(): void
   {
-    include_once APP_PATH . "/resources/views/plants/index.php";
+    $this->view('plants.index');
   }
 }
