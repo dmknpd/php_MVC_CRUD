@@ -4,6 +4,7 @@ namespace Core\Router;
 
 use Core\Redirect\Redirect;
 use Core\Request\Request;
+use Core\Session\Session;
 use Core\View\View;
 
 class Router
@@ -17,7 +18,8 @@ class Router
   public function __construct(
     private View $view,
     private Request $request,
-    private Redirect $redirect
+    private Redirect $redirect,
+    private Session $session
   ) {
     $this->initRoutes();
   }
@@ -52,7 +54,12 @@ class Router
     if (is_array($route->getAction())) {
       [$controller, $action] = $route->getAction();
 
-      $controller = new $controller($this->view, $this->request, $this->redirect);
+      $controller = new $controller(
+        $this->view,
+        $this->request,
+        $this->redirect,
+        $this->session
+      );
 
       // call_user_func([$controller, $action]);
       $controller->$action();
