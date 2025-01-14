@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Core\Controller\Controller;
+use Core\Validator\Validator;
 
 class PlantController extends Controller
 {
@@ -18,6 +19,15 @@ class PlantController extends Controller
 
   public function store()
   {
-    dd($this->request()->input('title'));
+    $validation = $this->request()->validate([
+      'title' => ['required', 'min:3', 'max:32'],
+      // 'description' => ['required', 'min:3', 'max:5'],
+    ]);
+
+    if (!$validation) {
+      dd('Validation failed', $this->request()->errors());
+    }
+
+    dd('Validation passed');
   }
 }
