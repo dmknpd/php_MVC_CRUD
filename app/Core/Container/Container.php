@@ -2,6 +2,7 @@
 
 namespace Core\Container;
 
+use Core\Redirect\Redirect;
 use Core\Request\Request;
 use Core\Router\Router;
 use Core\Validator\Validator;
@@ -13,6 +14,7 @@ class Container
   public readonly Router $router;
   public readonly View $view;
   public readonly Validator $validator;
+  public readonly Redirect $redirect;
 
   public function __construct()
   {
@@ -23,7 +25,8 @@ class Container
   {
     $this->view = new View();
     $this->validator = new Validator();
+    $this->redirect = new Redirect();
     $this->request = Request::createFromGlobals($this->validator);
-    $this->router = new Router($this->view, $this->request);
+    $this->router = new Router($this->view, $this->request, $this->redirect);
   }
 }

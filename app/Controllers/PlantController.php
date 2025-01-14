@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Core\Controller\Controller;
+use Core\Redirect\Redirect;
 use Core\Validator\Validator;
 
 class PlantController extends Controller
@@ -25,7 +26,7 @@ class PlantController extends Controller
     ]);
 
     if (!$validation) {
-      dd('Validation failed', $this->request()->errors());
+      dd($this->redirect('/plants/create'));
     }
 
     dd('Validation passed');
