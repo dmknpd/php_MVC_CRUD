@@ -2,6 +2,7 @@
 
 namespace Core\View;
 
+use Core\Exceptions\ViewNotFoundException;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -13,7 +14,7 @@ class View
     $filePath = $this->prepPath($name);
 
     if (!file_exists($filePath)) {
-      throw new RuntimeException("File not found: {$filePath}");
+      throw new ViewNotFoundException("View not found: {$filePath}");
     }
 
     extract([
@@ -44,7 +45,8 @@ class View
     $filePath = APP_PATH . "/resources/views/components/{$name}.php";
 
     if (!file_exists($filePath)) {
-      throw new RuntimeException("File not found: {$filePath}");
+      echo "Component not found: {$filePath}";
+      return;
     }
 
     include_once $filePath;

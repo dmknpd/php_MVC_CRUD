@@ -10,4 +10,14 @@ class PlantController extends Controller
   {
     $this->view('plants.index');
   }
+
+  public function create(): void
+  {
+    $this->view('plants.create');
+  }
+
+  public function store()
+  {
+    dd($this->request()->input('title'));
+  }
 }

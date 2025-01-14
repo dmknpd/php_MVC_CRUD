@@ -5,7 +5,7 @@ use Core\Router\Route;
 
 return [
   Route::get('/', [PlantController::class, 'index']),
-  Route::get('/plants', function () {
-    echo '<h1>Plants page</h1>';
-  }),
+  Route::get('/plants/create', [PlantController::class, 'create']),
+  Route::post('/plants', [PlantController::class, 'store']),
+
 ];

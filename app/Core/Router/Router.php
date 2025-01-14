@@ -2,6 +2,7 @@
 
 namespace Core\Router;
 
+use Core\Request\Request;
 use Core\View\View;
 
 class Router
@@ -13,7 +14,8 @@ class Router
   ];
 
   public function __construct(
-    private View $view
+    private View $view,
+    private Request $request
   ) {
     $this->initRoutes();
   }
@@ -48,9 +50,10 @@ class Router
     if (is_array($route->getAction())) {
       [$controller, $action] = $route->getAction();
 
-      $controller = new $controller($this->view);
+      $controller = new $controller($this->view, $this->request);
 
-      call_user_func([$controller, $action]);
+      // call_user_func([$controller, $action]);
+      $controller->$action();
     } else {
       call_user_func($route->getAction());
     }
