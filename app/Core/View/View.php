@@ -35,13 +35,13 @@ class View implements ViewInterface
       throw new InvalidArgumentException("Invalid path: '{$name}'");
     }
 
-    $path = explode('.', $name);
+    [$folder, $file] = explode('.', $name);
 
-    if (count($path) < 2) {
+    if ($file === null) {
       throw new InvalidArgumentException("Invalid page name.");
     }
 
-    return APP_PATH . "/resources/views/{$path[0]}/{$path[1]}.php";
+    return APP_PATH . "/resources/views/{$folder}/{$file}.php";
   }
 
   public function component(string $name): void
