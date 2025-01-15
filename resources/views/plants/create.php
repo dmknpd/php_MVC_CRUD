@@ -2,10 +2,12 @@
 
 /**
  * @var \Core\View\View $view
+ * @var \Core\Session\Session $session
  */
 ?>
 
 <?php $view->component('header') ?>
+
 
 <h1 class="page-title">Create Plant</h1>
 
@@ -23,10 +25,16 @@
             placeholder="Cactus" value="<?= htmlspecialchars($old['title'] ?? '') ?>" required>
         </div>
 
-        <?php if (!empty($errors['title'])) : ?>
-          <p class="form__error">
-            <?= htmlspecialchars($errors['title']) ?>
-          </p>
+        <?php if ($session->has('title')) : ?>
+
+          <ul class="form__errors-list">
+            <?php foreach ($session->getFlash('title') as $error): ?>
+              <li class="form__error">
+                <?= $error ?>
+              </li>
+            <?php endforeach; ?>
+
+          </ul>
         <?php endif; ?>
 
       </div>
@@ -43,10 +51,16 @@
             rows="5" placeholder="Lorem ipsum dolor sit amet..." required></textarea>
         </div>
 
-        <?php if (!empty($errors['description'])) : ?>
-          <p class="form__error">
-            <?= htmlspecialchars($errors['description']) ?>
-          </p>
+        <?php if ($session->has('description')) : ?>
+
+          <ul class="form__errors-list">
+            <?php foreach ($session->getFlash('description') as $error): ?>
+              <li class="form__error">
+                <?= $error ?>
+              </li>
+            <?php endforeach; ?>
+
+          </ul>
         <?php endif; ?>
       </div>
     </div> -->
@@ -63,10 +77,16 @@
             placeholder="100" required>
         </div>
 
-        <?php if (!empty($errors['price'])) : ?>
-          <p class="form__error">
-            <?= htmlspecialchars($errors['price']) ?>
-          </p>
+        <?php if ($session->has('price')) : ?>
+
+          <ul class="form__errors-list">
+            <?php foreach ($session->getFlash('price') as $error): ?>
+              <li class="form__error">
+                <?= $error ?>
+              </li>
+            <?php endforeach; ?>
+
+          </ul>
         <?php endif; ?>
 
       </div>

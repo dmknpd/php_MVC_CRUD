@@ -112,6 +112,10 @@ main {
   outline: none;
 }
 
+.form__errors-list {
+  list-style: none;
+}
+
 .form__error {
   margin-top: 0.25rem;
   font-size: 0.75rem;

@@ -2,9 +2,9 @@
 
 namespace Core\Request;
 
-use Core\Validator\Validator;
+use Core\Validator\ValidatorInterface;
 
-class Request
+class Request implements RequestInterface
 {
 
 
@@ -15,10 +15,10 @@ class Request
     private array $files,
     private array $cookies,
 
-    private Validator $validator,
+    private ValidatorInterface $validator,
   ) {}
 
-  public static function createFromGlobals(Validator $validator): static
+  public static function createFromGlobals(ValidatorInterface $validator): static
   {
     return new static($_GET, $_POST, $_SERVER, $_FILES, $_COOKIE, $validator);
   }

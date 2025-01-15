@@ -2,7 +2,7 @@
 
 namespace Core\Session;
 
-class Session
+class Session implements SessionInterface
 {
   public function __construct()
   {

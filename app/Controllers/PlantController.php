@@ -3,8 +3,6 @@
 namespace App\Controllers;
 
 use Core\Controller\Controller;
-use Core\Redirect\Redirect;
-use Core\Validator\Validator;
 
 class PlantController extends Controller
 {
@@ -23,10 +21,14 @@ class PlantController extends Controller
     $validation = $this->request()->validate([
       'title' => ['required', 'min:3', 'max:32'],
       // 'description' => ['required', 'min:3', 'max:5'],
+      // 'price' => ['required', 'numeric', 'positive'],
     ]);
 
     if (!$validation) {
-      dd($this->redirect('/plants/create'));
+      foreach ($this->request()->errors() as $field => $errors) {
+        $this->session()->set($field, $errors);
+      }
+      $this->redirect('/plants/create');
     }
 
     dd('Validation passed');

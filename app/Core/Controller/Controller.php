@@ -2,18 +2,18 @@
 
 namespace Core\Controller;
 
-use Core\Redirect\Redirect;
-use Core\Request\Request;
-use Core\Session\Session;
-use Core\View\View;
+use Core\Redirect\RedirectInterface;
+use Core\Request\RequestInterface;
+use Core\Session\SessionInterface;
+use Core\View\ViewInterface;
 
 abstract class Controller
 {
   public function __construct(
-    private View $view,
-    private Request $request,
-    private Redirect $redirect,
-    private Session $session
+    private ViewInterface $view,
+    private RequestInterface $request,
+    private RedirectInterface $redirect,
+    private SessionInterface $session
   ) {
     $this->view = $view;
     $this->request = $request;
@@ -26,17 +26,17 @@ abstract class Controller
     $this->view->page($name);
   }
 
-  public function request(): Request
+  public function request(): RequestInterface
   {
     return $this->request;
   }
 
-  public function redirect(string $url): Redirect
+  public function redirect(string $url): RedirectInterface
   {
     return $this->redirect->to($url);
   }
 
-  public function session(): Session
+  public function session(): SessionInterface
   {
     return $this->session;
   }

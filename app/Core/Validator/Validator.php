@@ -2,7 +2,7 @@
 
 namespace Core\Validator;
 
-class Validator
+class Validator implements ValidatorInterface
 {
   private array $errors = [];
   private array $data;
@@ -60,9 +60,25 @@ class Validator
         }
         break;
 
+        //Email
+
       case 'email':
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
           return "Field {$key} must be a valid email address";
+        }
+        break;
+
+        //Numbers
+
+      case 'numeric':
+        if (!is_numeric($value)) {
+          return "Field {$key} must be a number";
+        }
+        break;
+
+      case 'positive':
+        if ($value <= 0) {
+          return "Field {$key} must be greater than 0";
         }
         break;
     }

@@ -3,11 +3,15 @@
 namespace Core\View;
 
 use Core\Exceptions\ViewNotFoundException;
+use Core\Session\SessionInterface;
 use InvalidArgumentException;
-use RuntimeException;
 
-class View
+class View implements ViewInterface
 {
+
+  public function __construct(
+    private SessionInterface $session
+  ) {}
 
   public function page(string $name): void
   {
@@ -18,7 +22,8 @@ class View
     }
 
     extract([
-      'view' => $this
+      'view' => $this,
+      'session' => $this->session
     ]);
 
     include_once $filePath;

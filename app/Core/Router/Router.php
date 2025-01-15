@@ -2,12 +2,12 @@
 
 namespace Core\Router;
 
-use Core\Redirect\Redirect;
-use Core\Request\Request;
-use Core\Session\Session;
-use Core\View\View;
+use Core\Redirect\RedirectInterface;
+use Core\Request\RequestInterface;
+use Core\Session\SessionInterface;
+use Core\View\ViewInterface;
 
-class Router
+class Router implements RouterInterface
 {
 
   private array $routes = [
@@ -16,10 +16,10 @@ class Router
   ];
 
   public function __construct(
-    private View $view,
-    private Request $request,
-    private Redirect $redirect,
-    private Session $session
+    private ViewInterface $view,
+    private RequestInterface $request,
+    private RedirectInterface $redirect,
+    private SessionInterface $session
   ) {
     $this->initRoutes();
   }
