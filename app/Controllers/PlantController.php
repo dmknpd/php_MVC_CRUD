@@ -2,10 +2,19 @@
 
 namespace App\Controllers;
 
+use App\Models\Plant;
 use Core\Controller\Controller;
 
 class PlantController extends Controller
 {
+  private Plant $plantModel;
+
+  public function __construct(
+    Plant $plantModel
+  ) {
+    $this->plantModel = $plantModel;
+  }
+
   public function index(): void
   {
     $this->view('plants.index');
