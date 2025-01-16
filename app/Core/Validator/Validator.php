@@ -6,13 +6,19 @@ class Validator implements ValidatorInterface
 {
   private array $errors = [];
   private array $data;
+  private array $filteredData = [];
 
   public function validate(array $data, array $rules): bool
   {
     $this->errors = [];
+    $this->filteredData = [];
     $this->data = $data;
 
     foreach ($rules as $key => $rule) {
+      if (array_key_exists($key, $data)) {
+        $this->filteredData[$key] = $data[$key];
+      }
+
       $rules = $rule;
 
       foreach ($rules as $rule) {
@@ -35,6 +41,11 @@ class Validator implements ValidatorInterface
   public function errors(): array
   {
     return $this->errors;
+  }
+
+  public function filteredData(): array
+  {
+    return $this->filteredData;
   }
 
   private function validateRule(string $key, string $ruleName, string $ruleValue = null): string|false

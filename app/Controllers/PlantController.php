@@ -18,7 +18,9 @@ class PlantController extends Controller
 
   public function store()
   {
-    $validation = $this->request()->validate([
+    $data = $this->request()->post();
+
+    $validation = $this->request()->validate($data, [
       'title' => ['required', 'min:3', 'max:32'],
       // 'description' => ['required', 'min:3', 'max:5'],
       // 'price' => ['required', 'numeric', 'positive'],
@@ -31,6 +33,17 @@ class PlantController extends Controller
       $this->redirect('/plants/create');
     }
 
-    dd('Validation passed');
+    $filteredData = $this->request()->filteredData();
+
+    $testData = [
+      'seller_id' => 22,
+      'description' => "TEST TEST TEST",
+      'price' => 228.00,
+    ];
+    $testArray = $filteredData + $testData;
+
+    $id = $this->db()->insert('plants', $testArray);
+
+    dd("Plant added id: {$id}");
   }
 }

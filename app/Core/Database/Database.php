@@ -16,23 +16,42 @@ class Database implements DatabaseInterface
     $this->connect();
   }
 
-  public function insert(string $table, array $data): int|false {}
+  public function insert(string $table, array $data): int|false
+  {
+    $fields = array_keys($data);
+
+    $columns = implode(', ', $fields);
+    $binds = implode(', ', array_map(fn($field) => ":{$field}", $fields));
+
+    $sql = "INSERT INTO {$table} ({$columns}) VALUES ({$binds})";
+    $stmt = $this->pdo->prepare($sql);
+
+    if ($stmt->execute($data)) {
+      return (int) $this->pdo->lastInsertId();
+    }
+
+    return false;
+  }
 
   private function connect()
   {
     $driver = $this->config->get('database.driver');
     $host = $this->config->get('database.host');
     $port = $this->config->get('database.port');
-    $dbname = $this->config->get('database.dbname');
+    $database = $this->config->get('database.database');
     $charset = $this->config->get('database.charset');
     $username = $this->config->get('database.username');
     $password = $this->config->get('database.password');
 
     try {
       $this->pdo = new PDO(
-        "{$driver}:host={$host};port={$port};dbname={$dbname};charset={$charset}",
+        "{$driver}:host={$host};port={$port};dbname={$database};charset={$charset}",
         $username,
-        $password
+        $password,
+        [
+          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+          PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
       );
     } catch (PDOException $e) {
       exit("Database connection failed: {$e->getMessage()}");

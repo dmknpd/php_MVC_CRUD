@@ -2,6 +2,7 @@
 
 namespace Core\Router;
 
+use Core\Database\DatabaseInterface;
 use Core\Redirect\RedirectInterface;
 use Core\Request\RequestInterface;
 use Core\Session\SessionInterface;
@@ -19,7 +20,8 @@ class Router implements RouterInterface
     private ViewInterface $view,
     private RequestInterface $request,
     private RedirectInterface $redirect,
-    private SessionInterface $session
+    private SessionInterface $session,
+    private DatabaseInterface $database
   ) {
     $this->initRoutes();
   }
@@ -58,7 +60,8 @@ class Router implements RouterInterface
         $this->view,
         $this->request,
         $this->redirect,
-        $this->session
+        $this->session,
+        $this->database
       );
 
       // call_user_func([$controller, $action]);
