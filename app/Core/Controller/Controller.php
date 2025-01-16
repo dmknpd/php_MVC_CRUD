@@ -15,7 +15,7 @@ abstract class Controller
     private RequestInterface $request,
     private RedirectInterface $redirect,
     private SessionInterface $session,
-    private DatabaseInterface $database
+    public DatabaseInterface $database
   ) {
     $this->view = $view;
     $this->request = $request;

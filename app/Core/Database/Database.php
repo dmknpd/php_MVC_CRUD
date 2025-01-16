@@ -16,17 +16,6 @@ class Database implements DatabaseInterface
     $this->connect();
   }
 
-  public function query(string $sql, array $params = []): array
-  {
-    $stmt = $this->pdo->prepare($sql);
-
-    if ($stmt->execute($params)) {
-      return $stmt->fetchAll();
-    }
-
-    return false;
-  }
-
   public function insert(string $table, array $data): int|false
   {
     $fields = array_keys($data);

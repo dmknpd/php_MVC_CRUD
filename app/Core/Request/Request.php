@@ -6,8 +6,6 @@ use Core\Validator\ValidatorInterface;
 
 class Request implements RequestInterface
 {
-
-
   public function __construct(
     private array $get,
     private array $post,
