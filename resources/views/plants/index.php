@@ -3,6 +3,7 @@
 /**
  * @var \Core\View\View $view
  */
+
 ?>
 
 <?php $view->component('header') ?>

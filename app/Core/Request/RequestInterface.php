@@ -12,12 +12,10 @@ interface RequestInterface
 
   public function method(): string;
 
-  // public function input(string $key, $default = null): mixed;
-  public function post(): array;
+  public function input(string $key, $default = null): mixed;
+  // public function post(): array;
 
-  public function validate(array $data, array $rules): bool;
-
-  public function filteredData(): array;
+  public function validate(array $rules): bool;
 
   public function errors(): array;
 }

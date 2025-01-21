@@ -31,25 +31,27 @@ class Request implements RequestInterface
     return $this->server['REQUEST_METHOD'];
   }
 
-  // public function input(string $key, $default = null): mixed
-  // {
-  //   return $this->post[$key] ?? $this->get[$key] ?? $default;
-  // }
-
-  public function post(): array
+  public function input(string $key, $default = null): mixed
   {
-    return $this->post;
+    return $this->post[$key] ?? $this->get[$key] ?? $default;
   }
 
-  public function validate(array $data, array $rules): bool
+  // public function post(): array
+  // {
+  //   return $this->post;
+  // }
+
+  public function validate(array $rules): bool
   {
+    $data = [];
+
+    foreach ($rules as $field => $rule) {
+      $data[$field] = $this->input($field);
+    }
+
     return $this->validator->validate($data, $rules);
   }
 
-  public function filteredData(): array
-  {
-    return $this->validator->filteredData();
-  }
 
   public function errors(): array
   {
