@@ -2,6 +2,7 @@
 
 namespace Core\Controller;
 
+use Core\Auth\AuthInterface;
 use Core\Database\DatabaseInterface;
 use Core\Redirect\RedirectInterface;
 use Core\Request\RequestInterface;
@@ -15,13 +16,15 @@ abstract class Controller
     private RequestInterface $request,
     private RedirectInterface $redirect,
     private SessionInterface $session,
-    public DatabaseInterface $database
+    private DatabaseInterface $database,
+    private AuthInterface $auth
   ) {
     $this->view = $view;
     $this->request = $request;
     $this->redirect = $redirect;
     $this->session = $session;
     $this->database = $database;
+    $this->auth = $auth;
   }
 
   public function view(string $name): void
@@ -47,5 +50,10 @@ abstract class Controller
   public function db(): DatabaseInterface
   {
     return $this->database;
+  }
+
+  public function auth(): AuthInterface
+  {
+    return $this->auth;
   }
 }

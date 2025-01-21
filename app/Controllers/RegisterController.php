@@ -29,8 +29,8 @@ class RegisterController extends Controller
 
     $data = [
       'name' => $this->request()->input('name'),
-      'email' => password_hash($this->request()->input('password'), PASSWORD_DEFAULT),
-      'password' => $this->request()->input('password')
+      'email' => $this->request()->input('email'),
+      'password' => password_hash($this->request()->input('password'), PASSWORD_DEFAULT),
     ];
 
     $id = $this->db()->insert('users', $data);

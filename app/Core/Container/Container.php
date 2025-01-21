@@ -2,6 +2,8 @@
 
 namespace Core\Container;
 
+use Core\Auth\Auth;
+use Core\Auth\AuthInterface;
 use Core\Config\ConfigInterface;
 use Core\Config\Config;
 use Core\Database\Database;
@@ -29,6 +31,7 @@ class Container
   public readonly SessionInterface $session;
   public readonly ConfigInterface $config;
   public readonly DatabaseInterface $database;
+  public readonly AuthInterface $auth;
 
   public function __construct()
   {
@@ -43,13 +46,15 @@ class Container
     $this->redirect = new Redirect();
     $this->config = new Config();
     $this->database = new Database($this->config);
+    $this->auth = new Auth($this->database, $this->session, $this->config);
     $this->request = Request::createFromGlobals($this->validator);
     $this->router = new Router(
       $this->view,
       $this->request,
       $this->redirect,
       $this->session,
-      $this->database
+      $this->database,
+      $this->auth
     );
   }
 }

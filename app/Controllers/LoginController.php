@@ -14,24 +14,9 @@ class LoginController extends Controller
 
   public function store()
   {
-    $validation = $this->request()->validate([
-      'email' => ['required', 'email'],
-      'password' => ['required', 'min:4'],
-    ]);
+    $email = $this->request()->input('email');
+    $password = $this->request()->input('password');
 
-    if (!$validation) {
-      $this->session()->set('error', 'Wrong email or password');
-
-      $this->redirect('/login');
-    }
-
-    $data = [
-      'email' => password_hash($this->request()->input('password'), PASSWORD_DEFAULT),
-      'password' => $this->request()->input('password')
-    ];
-
-    $id = $this->db()->insert('users', $data);
-
-    dd("User added id: {$id}");
+    dd($this->auth()->attempt($email, $password), $_SESSION);
   }
 }
