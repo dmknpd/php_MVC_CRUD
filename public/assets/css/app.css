@@ -19,8 +19,11 @@ body {
 
 .nav {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  position: relative;
   font-weight: 700;
+  padding: 0 1rem;
 }
 
 .nav__link {
@@ -32,7 +35,17 @@ body {
   color: rgb(34 197 94);
 }
 
+.logout {
+  border: none;
+  background: none;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
 .nav__group {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   gap: 5rem;
 }

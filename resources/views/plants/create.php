@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @var \Core\View\View $view
- * @var \Core\Session\Session $session
+ * @var \Core\View\ViewInterface $view
+ * @var \Core\Session\SessionInterface $session
  */
 ?>
 

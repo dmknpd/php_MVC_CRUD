@@ -2,6 +2,7 @@
 
 namespace Core\View;
 
+use Core\Auth\AuthInterface;
 use Core\Exceptions\ViewNotFoundException;
 use Core\Session\SessionInterface;
 use InvalidArgumentException;
@@ -10,7 +11,8 @@ class View implements ViewInterface
 {
 
   public function __construct(
-    private SessionInterface $session
+    private SessionInterface $session,
+    private AuthInterface $auth
   ) {}
 
   public function page(string $name): void
@@ -21,10 +23,7 @@ class View implements ViewInterface
       throw new ViewNotFoundException("View not found: {$filePath}");
     }
 
-    extract([
-      'view' => $this,
-      'session' => $this->session
-    ]);
+    extract($this->defaultData());
 
     include_once $filePath;
   }
@@ -54,6 +53,17 @@ class View implements ViewInterface
       return;
     }
 
+    extract($this->defaultData());
+
     include_once $filePath;
+  }
+
+  private function defaultData(): array
+  {
+    return [
+      'view' => $this,
+      'session' => $this->session,
+      'auth' => $this->auth
+    ];
   }
 }

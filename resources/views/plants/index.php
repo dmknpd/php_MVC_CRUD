@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @var \Core\View\View $view
+ * @var \Core\View\ViewInterface $view
  */
 
 ?>

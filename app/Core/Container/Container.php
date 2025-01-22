@@ -41,12 +41,12 @@ class Container
   private function registerServices()
   {
     $this->session = new Session();
-    $this->view = new View($this->session);
     $this->validator = new Validator();
     $this->redirect = new Redirect();
     $this->config = new Config();
     $this->database = new Database($this->config);
     $this->auth = new Auth($this->database, $this->session, $this->config);
+    $this->view = new View($this->session, $this->auth);
     $this->request = Request::createFromGlobals($this->validator);
     $this->router = new Router(
       $this->view,
