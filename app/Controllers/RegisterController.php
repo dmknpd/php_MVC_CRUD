@@ -17,7 +17,8 @@ class RegisterController extends Controller
     $validation = $this->request()->validate([
       'name' => ['required', 'min:3', 'max:32'],
       'email' => ['required', 'email'],
-      'password' => ['required', 'min:4'],
+      'password' => ['required', 'min:4', 'confirmed'],
+      'password_confirmation' => ['required', 'min:4']
     ]);
 
     if (!$validation) {
@@ -27,14 +28,17 @@ class RegisterController extends Controller
       $this->redirect('/register');
     }
 
-    $data = [
+    $user = [
       'name' => $this->request()->input('name'),
       'email' => $this->request()->input('email'),
       'password' => password_hash($this->request()->input('password'), PASSWORD_DEFAULT),
     ];
 
-    $id = $this->db()->insert('users', $data);
+    // $seller = [
+    // ];
 
-    dd("User added id: {$id}");
+    $this->db()->insert('users', $user);
+
+    $this->redirect('/');
   }
 }

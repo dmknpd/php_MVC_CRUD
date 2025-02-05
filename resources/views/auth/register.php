@@ -73,6 +73,7 @@
         <div
           class="form__input-container">
           <input type="password" name="password" id="password"
+            placeholder="******"
             class="form__input"
             value="<?= htmlspecialchars($old['password'] ?? '') ?>" required>
         </div>
@@ -100,6 +101,7 @@
           class="form__input-container">
           <input type="password" name="password_confirmation" id="password_confirmation"
             class="form__input"
+            placeholder="******"
             value="<?= htmlspecialchars($old['password_confirmation'] ?? '') ?>" required>
         </div>
 

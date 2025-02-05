@@ -82,6 +82,14 @@ class Validator implements ValidatorInterface
           return "Field {$key} must be greater than 0";
         }
         break;
+
+        //confirmation
+
+      case 'confirmed':
+        if ($value !== $this->data[$key . '_confirmation']) {
+          return "Field {$key} must be confirmed";
+        }
+        break;
     }
 
     return false;
