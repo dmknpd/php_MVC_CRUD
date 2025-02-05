@@ -22,8 +22,6 @@ class Router implements RouterInterface
     private RequestInterface $request,
     private RedirectInterface $redirect,
     private SessionInterface $session,
-    private DatabaseInterface $database,
-    private AuthInterface $auth
   ) {
     $this->initRoutes();
   }
@@ -55,13 +53,13 @@ class Router implements RouterInterface
       $this->notFound();
     }
 
-    if ($route->hasMiddlewares()) {
-      foreach ($route->getMiddlewares() as $middleware) {
-        $middleware = new $middleware($this->request, $this->auth, $this->redirect);
+    // if ($route->hasMiddlewares()) {
+    //   foreach ($route->getMiddlewares() as $middleware) {
+    //     $middleware = new $middleware($this->request, $this->redirect);
 
-        $middleware->handle();
-      }
-    }
+    //     $middleware->handle();
+    //   }
+    // }
 
     if (is_array($route->getAction())) {
       [$controller, $action] = $route->getAction();
@@ -71,8 +69,6 @@ class Router implements RouterInterface
         $this->request,
         $this->redirect,
         $this->session,
-        $this->database,
-        $this->auth
       );
 
       // call_user_func([$controller, $action]);

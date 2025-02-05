@@ -2,6 +2,8 @@
 
 namespace Core\Validator;
 
+use App\Models\User;
+
 class Validator implements ValidatorInterface
 {
   private array $errors = [];
@@ -69,6 +71,12 @@ class Validator implements ValidatorInterface
         }
         break;
 
+      case 'unique':
+        if ($this->isEmailTaken($value)) {
+          return "This {$key} is already in use";
+        }
+        break;
+
         //Numbers
 
       case 'numeric':
@@ -93,5 +101,11 @@ class Validator implements ValidatorInterface
     }
 
     return false;
+  }
+
+  private function isEmailTaken(string $email): bool
+  {
+    $user = User::findByEmail($email);
+    return !empty($user);
   }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
 use Core\Controller\Controller;
 
 class RegisterController extends Controller
@@ -15,8 +16,8 @@ class RegisterController extends Controller
   public function store()
   {
     $validation = $this->request()->validate([
-      'name' => ['required', 'min:3', 'max:32'],
-      'email' => ['required', 'email'],
+      'name' => ['required', 'min:2', 'max:32'],
+      'email' => ['required', 'email', 'unique'],
       'password' => ['required', 'min:4', 'confirmed'],
       'password_confirmation' => ['required', 'min:4']
     ]);
@@ -34,10 +35,7 @@ class RegisterController extends Controller
       'password' => password_hash($this->request()->input('password'), PASSWORD_DEFAULT),
     ];
 
-    // $seller = [
-    // ];
-
-    $this->db()->insert('users', $user);
+    User::create($user);
 
     $this->redirect('/');
   }

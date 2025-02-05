@@ -16,15 +16,11 @@ abstract class Controller
     private RequestInterface $request,
     private RedirectInterface $redirect,
     private SessionInterface $session,
-    private DatabaseInterface $database,
-    private AuthInterface $auth
   ) {
     $this->view = $view;
     $this->request = $request;
     $this->redirect = $redirect;
     $this->session = $session;
-    $this->database = $database;
-    $this->auth = $auth;
   }
 
   public function view(string $name): void
@@ -45,15 +41,5 @@ abstract class Controller
   public function session(): SessionInterface
   {
     return $this->session;
-  }
-
-  public function db(): DatabaseInterface
-  {
-    return $this->database;
-  }
-
-  public function auth(): AuthInterface
-  {
-    return $this->auth;
   }
 }
