@@ -22,6 +22,7 @@ class Router implements RouterInterface
     private RequestInterface $request,
     private RedirectInterface $redirect,
     private SessionInterface $session,
+    private AuthInterface $auth
   ) {
     $this->initRoutes();
   }
@@ -69,6 +70,7 @@ class Router implements RouterInterface
         $this->request,
         $this->redirect,
         $this->session,
+        $this->auth
       );
 
       // call_user_func([$controller, $action]);

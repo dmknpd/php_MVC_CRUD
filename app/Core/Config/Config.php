@@ -4,7 +4,7 @@ namespace Core\Config;
 
 use InvalidArgumentException;
 
-class Config
+class Config implements ConfigInterface
 {
 
   private static ?self $instance = null;
@@ -17,7 +17,6 @@ class Config
 
     $this->config = $this->loadConfig();
   }
-
 
   public static function getInstance(): self
   {

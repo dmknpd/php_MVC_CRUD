@@ -19,7 +19,7 @@ class RegisterController extends Controller
       'name' => ['required', 'min:2', 'max:32'],
       'email' => ['required', 'email', 'unique'],
       'password' => ['required', 'min:4', 'confirmed'],
-      'password_confirmation' => ['required', 'min:4']
+      'password_confirmation' => ['required']
     ]);
 
     if (!$validation) {

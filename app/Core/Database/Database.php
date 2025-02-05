@@ -59,7 +59,12 @@ class Database implements DatabaseInterface
     $params = [];
 
     if (!empty($conditions)) {
-      $where = 'WHERE ' . implode(' AND ', array_map(fn($key) => "{$key} = :{$key}", array_keys($conditions)));
+      $whereParts = [];
+      foreach ($conditions as $key => $value) {
+        $whereParts[] = "`{$key}` = :{$key}";
+        $params[$key] = $value;
+      }
+      $where = 'WHERE ' . implode(' AND ', $whereParts);
     }
 
     $sql = "SELECT * FROM {$table} {$where} LIMIT 1";
@@ -76,7 +81,12 @@ class Database implements DatabaseInterface
     $params = [];
 
     if (!empty($conditions)) {
-      $where = 'WHERE ' . implode(' AND ', array_map(fn($key) => "{$key} = :{$key}", array_keys($conditions)));
+      $whereParts = [];
+      foreach ($conditions as $key => $value) {
+        $whereParts[] = "`{$key}` = :{$key}";
+        $params[$key] = $value;
+      }
+      $where = 'WHERE ' . implode(' AND ', $whereParts);
     }
 
     $sql = "SELECT * FROM {$table} {$where}";

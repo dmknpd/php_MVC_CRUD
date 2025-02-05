@@ -12,9 +12,10 @@ class View implements ViewInterface
 
   public function __construct(
     private SessionInterface $session,
+    private AuthInterface $auth
   ) {}
 
-  public function page(string $name): void
+  public function page(string $name, array $data = []): void
   {
     $filePath = $this->prepPath($name);
 
@@ -22,7 +23,7 @@ class View implements ViewInterface
       throw new ViewNotFoundException("View not found: {$filePath}");
     }
 
-    extract($this->defaultData());
+    extract(array_merge($this->defaultData(), $data));
 
     include_once $filePath;
   }
@@ -42,7 +43,7 @@ class View implements ViewInterface
     return APP_PATH . "/resources/views/{$folder}/{$file}.php";
   }
 
-  public function component(string $name): void
+  public function component(string $name, array $data = []): void
   {
 
     $filePath = APP_PATH . "/resources/views/components/{$name}.php";
@@ -52,7 +53,7 @@ class View implements ViewInterface
       return;
     }
 
-    extract($this->defaultData());
+    extract(array_merge($this->defaultData(), $data));
 
     include_once $filePath;
   }
@@ -62,6 +63,7 @@ class View implements ViewInterface
     return [
       'view' => $this,
       'session' => $this->session,
+      'auth' => $this->auth
     ];
   }
 }

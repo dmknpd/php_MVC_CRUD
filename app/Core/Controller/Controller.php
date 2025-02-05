@@ -16,11 +16,13 @@ abstract class Controller
     private RequestInterface $request,
     private RedirectInterface $redirect,
     private SessionInterface $session,
+    private AuthInterface $auth
   ) {
     $this->view = $view;
     $this->request = $request;
     $this->redirect = $redirect;
     $this->session = $session;
+    $this->auth = $auth;
   }
 
   public function view(string $name): void
@@ -41,5 +43,10 @@ abstract class Controller
   public function session(): SessionInterface
   {
     return $this->session;
+  }
+
+  public function auth(): AuthInterface
+  {
+    return $this->auth;
   }
 }

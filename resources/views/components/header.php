@@ -3,6 +3,7 @@
 /**
  * @var \Core\View\ViewInterface $view
  * @var \Core\Session\SessionInterface $session
+ * @var \Core\Auth\AuthInterface $auth
  */
 
 ?>
@@ -29,10 +30,19 @@
       <a class="nav__link" href="/">Contacts</a>
     </div>
 
-    <div class="nav__auth">
-      <a class="nav__link" href="/login">Log In</a>
-      <a class="nav__link" href="/register">Sign In</a>
-    </div>
+    <?php if ($auth->check()) : ?>
+      <div class="nav__auth">
+        <a class="nav__link" href="/plants/create">Add plant</a>
+        <form action="/logout" method="POST">
+          <button type="submit" class="nav__link logout" href="/register">Log Out</button>
+        </form>
+      </div>
+    <?php else: ?>
+      <div class="nav__auth">
+        <a class="nav__link" href="/login">Log In</a>
+        <a class="nav__link" href="/register">Sign In</a>
+      </div>
+    <?php endif; ?>
 
   </nav>
 

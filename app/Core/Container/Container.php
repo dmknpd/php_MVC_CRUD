@@ -31,7 +31,6 @@ class Container
   public readonly ValidatorInterface $validator;
   public readonly RedirectInterface $redirect;
   public readonly SessionInterface $session;
-  public readonly ConfigInterface $config;
   public readonly AuthInterface $auth;
 
   public function __construct()
@@ -44,14 +43,15 @@ class Container
     $this->session = new Session();
     $this->validator = new Validator();
     $this->redirect = new Redirect();
-    // $this->auth = new Auth($this->database, $this->session, $this->config);
-    $this->view = new View($this->session);
+    $this->auth = new Auth($this->session);
+    $this->view = new View($this->session, $this->auth);
     $this->request = Request::createFromGlobals($this->validator);
     $this->router = new Router(
       $this->view,
       $this->request,
       $this->redirect,
       $this->session,
+      $this->auth
     );
   }
 }

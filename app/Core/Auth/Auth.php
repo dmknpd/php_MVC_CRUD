@@ -2,24 +2,31 @@
 
 namespace Core\Auth;
 
+use App\Models\User;
+use Core\Config\Config;
 use Core\Config\ConfigInterface;
-use Core\Database\DatabaseInterface;
 use Core\Session\SessionInterface;
 
 class Auth implements AuthInterface
 {
+  private ?ConfigInterface $config = null;
+
   public function __construct(
-    private DatabaseInterface $db,
     private SessionInterface $session,
-    private ConfigInterface $config
   ) {}
+
+  private function getConfig(): ConfigInterface
+  {
+    if ($this->config === null) {
+      $this->config = Config::getInstance();
+    }
+    return $this->config;
+  }
 
   public function attempt(string $username, string $password): bool
   {
 
-    $user = $this->db->first($this->table(), [
-      $this->username() => $username
-    ]);
+    $user = User::findByEmail($username);
 
     if (!$user) {
       return false;
@@ -39,24 +46,18 @@ class Auth implements AuthInterface
     return $this->session->has($this->sessionField());
   }
 
-  public function user(): ?User
+  public function user(): ?array
   {
     if (! $this->check()) {
       return null;
     }
 
-    $user =  $this->db->first($this->table(), [
-      'id' => $this->session->get($this->sessionField())
-    ]);
 
-    if ($user) {
-      return new User(
-        $user['id'],
-        $user[$this->username()],
-        $user[$this->password()]
-      );
-    }
+    $user =  User::find($this->session->get($this->sessionField()));
+
+    return $user ?: null;
   }
+
 
   public function logout(): void
   {
@@ -65,21 +66,21 @@ class Auth implements AuthInterface
 
   public function table(): string
   {
-    return $this->config->get('auth.table', 'user');
+    return $this->getConfig()->get('auth.table', 'user');
   }
 
   public function username(): string
   {
-    return $this->config->get('auth.username', 'email');
+    return $this->getConfig()->get('auth.username', 'email');
   }
 
   public function password(): string
   {
-    return $this->config->get('auth.password', 'password');
+    return $this->getConfig()->get('auth.password', 'password');
   }
 
   public function sessionField(): string
   {
-    return $this->config->get('auth.session_field', 'user_id');
+    return $this->getConfig()->get('auth.session_field', 'user_id');
   }
 }
