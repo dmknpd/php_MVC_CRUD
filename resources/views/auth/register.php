@@ -172,9 +172,9 @@
       </div>
     </div>
 
-    <?php if ($session->has('user')) : ?>
+    <?php if ($session->has('register_error')) : ?>
       <p class="form__error">
-        <?= $session->getFlash('user') ?>
+        <?= $session->getFlash('register_error') ?>
       </p>
     <?php endif; ?>
 

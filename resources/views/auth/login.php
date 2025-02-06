@@ -41,9 +41,9 @@
         </div>
       </div>
 
-      <?php if ($session->has('error')) : ?>
+      <?php if ($session->has('login_error')) : ?>
         <p class="form__error">
-          <?= $session->getFlash('error') ?>
+          <?= $session->getFlash('login_error') ?>
         </p>
 
       <?php endif; ?>

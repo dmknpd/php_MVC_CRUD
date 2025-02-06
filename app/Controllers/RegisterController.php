@@ -41,7 +41,7 @@ class RegisterController extends Controller
     $user_id = User::create($user);
 
     if (!$user_id) {
-      $this->session()->set('user', 'Failed to create user. Please try again.');
+      $this->session()->set('register_error', 'Failed to create user. Please try again.');
       $this->redirect('/register');
     }
 

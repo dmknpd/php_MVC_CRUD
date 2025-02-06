@@ -20,7 +20,7 @@ class LoginController extends Controller
 
     if (!$this->auth()->attempt($email, $password)) {
 
-      $this->session()->set('error', 'Wrong email or password');
+      $this->session()->set('login_error', 'Wrong email or password');
 
       $this->redirect('/login');
     }
