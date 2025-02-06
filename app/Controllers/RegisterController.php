@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Seller;
 use App\Models\User;
 use Core\Controller\Controller;
 
@@ -19,7 +20,9 @@ class RegisterController extends Controller
       'name' => ['required', 'min:2', 'max:32'],
       'email' => ['required', 'email', 'unique'],
       'password' => ['required', 'min:4', 'confirmed'],
-      'password_confirmation' => ['required']
+      'password_confirmation' => ['required'],
+      'company' => ['required', 'min:2', 'max:32'],
+      'location' => ['required', 'min:2', 'max:32'],
     ]);
 
     if (!$validation) {
@@ -35,7 +38,20 @@ class RegisterController extends Controller
       'password' => password_hash($this->request()->input('password'), PASSWORD_DEFAULT),
     ];
 
-    User::create($user);
+    $user_id = User::create($user);
+
+    if (!$user_id) {
+      $this->session()->set('user', 'Failed to create user. Please try again.');
+      $this->redirect('/register');
+    }
+
+    $seller = [
+      'user_id' => $user_id,
+      'name' => $this->request()->input('company'),
+      'location' => $this->request()->input('location'),
+    ];
+
+    Seller::create($seller);
 
     $this->redirect('/');
   }

@@ -120,6 +120,64 @@
       </div>
     </div>
 
+    <!-- Company -->
+    <div class="form__input-group">
+      <label for="title" class="form__label">Company</label>
+      <div class="form__input-wrapper">
+        <div
+          class="form__input-container">
+          <input type="text" name="company" id="company"
+            class="form__input"
+            placeholder="Plant Limited" value="<?= htmlspecialchars($old['company'] ?? '') ?>" required>
+        </div>
+
+        <?php if ($session->has('company')) : ?>
+
+          <ul class="form__errors-list">
+            <?php foreach ($session->getFlash('company') as $error): ?>
+              <li class="form__error">
+                <?= $error ?>
+              </li>
+            <?php endforeach; ?>
+
+          </ul>
+        <?php endif; ?>
+
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="form__input-group">
+      <label for="title" class="form__label">Location</label>
+      <div class="form__input-wrapper">
+        <div
+          class="form__input-container">
+          <input type="text" name="location" id="location"
+            class="form__input"
+            placeholder="New York" value="<?= htmlspecialchars($old['location'] ?? '') ?>" required>
+        </div>
+
+        <?php if ($session->has('location')) : ?>
+
+          <ul class="form__errors-list">
+            <?php foreach ($session->getFlash('location') as $error): ?>
+              <li class="form__error">
+                <?= $error ?>
+              </li>
+            <?php endforeach; ?>
+
+          </ul>
+        <?php endif; ?>
+
+      </div>
+    </div>
+
+    <?php if ($session->has('user')) : ?>
+      <p class="form__error">
+        <?= $session->getFlash('user') ?>
+      </p>
+    <?php endif; ?>
+
 
     <!-- Submit -->
     <div class="form__button-container">
