@@ -23,6 +23,16 @@ abstract class Model implements ModelInterface
     return self::db()->selectAll(static::$table);
   }
 
+  public static function allWithJoin(string $joinTable, string $onCondition, array $conditions = []): array
+  {
+    return self::db()->selectAllWithJoin(
+      static::$table,
+      $joinTable,
+      $onCondition,
+      $conditions
+    );
+  }
+
   public static function create(array $data): int
   {
     return self::db()->insert(static::$table, $data);

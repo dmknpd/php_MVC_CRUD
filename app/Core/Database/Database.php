@@ -95,6 +95,29 @@ class Database implements DatabaseInterface
     return $stmt->fetchAll();
   }
 
+  public function selectAllWithJoin(string $table, string $joinTable, string $onCondition, array $conditions = []): array
+  {
+    $where = '';
+    $params = [];
+
+    if (!empty($conditions)) {
+      $whereParts = [];
+      foreach ($conditions as $key => $value) {
+        $whereParts[] = "`{$key}` = :{$key}";
+        $params[$key] = $value;
+      }
+      $where = 'WHERE ' . implode(' AND ', $whereParts);
+    }
+
+    $sql = "SELECT * FROM {$table} 
+            LEFT JOIN {$joinTable} ON {$onCondition} 
+            {$where}";
+
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+    return $stmt->fetchAll();
+  }
+
   public function insert(string $table, array $data): int
   {
     $columns = implode(', ', array_keys($data));
