@@ -12,7 +12,8 @@ class Plant extends Model
   {
     return self::allWithJoin(
       'sellers',
-      'plants.seller_id = sellers.id'
+      'plants.seller_id = sellers.id',
+      orderBy: 'plants.created_at'
     );
   }
 }

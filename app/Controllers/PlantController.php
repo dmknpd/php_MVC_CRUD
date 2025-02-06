@@ -20,37 +20,40 @@ class PlantController extends Controller
     $this->view('plants.create');
   }
 
-  // public function store()
-  // {
-  //   $validation = $this->request()->validate([
-  //     'title' => ['required', 'min:3', 'max:32'],
-  //     // 'description' => ['required', 'min:3', 'max:5'],
-  //     // 'price' => ['required', 'numeric', 'positive'],
-  //   ]);
+  public function store()
+  {
+    $validation = $this->request()->validate([
+      'title' => ['required', 'min:3', 'max:32'],
+      'description' => ['required', 'min:3', 'max:5'],
+      'price' => ['required', 'numeric', 'positive'],
+    ]);
 
-  //   if (!$validation) {
-  //     foreach ($this->request()->errors() as $field => $errors) {
-  //       $this->session()->set($field, $errors);
-  //     }
-  //     $this->redirect('/plants/create');
-  //   }
+    if (!$validation) {
+      foreach ($this->request()->errors() as $field => $errors) {
+        $this->session()->set($field, $errors);
+      }
+      $this->redirect('/plants/create');
+    }
 
-  //   $data = [
-  //     'title' => $this->request()->input('title'),
-  //     // 'description' => $this->request()->input('description'),
-  //     // 'price' => $this->request()->input('price')
-  //   ];
+    $data = [
+      'title' => $this->request()->input('title'),
+      'description' => $this->request()->input('description'),
+      'price' => $this->request()->input('price')
+    ];
 
-  //   $testData = [
-  //     'seller_id' => 22,
-  //     'description' => "TEST TEST TEST",
-  //     'price' => 228.00,
-  //   ];
+    $seller = $this->auth()->seller()['id'];
 
-  //   $testArray = $data + $testData;
+    if (!$seller) {
+      $this->session()->set('create-plant_error', 'Failed to create plant. Please try again.');
+      $this->redirect('/plant/create');
+    }
 
-  //   $id = $this->db()->insert('plants', $testArray);
+    $data['seller_id'] = $seller;
 
-  //   dd("Plant added id: {$id}");
-  // }
+    Plant::create($data);
+
+    //TODO: add success notification
+
+    $this->redirect('/');
+  }
 }

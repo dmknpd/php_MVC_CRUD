@@ -9,7 +9,7 @@
 <?php $view->component('header') ?>
 
 
-<h1 class="page-title">Create Plant</h1>
+<h1 class="page-title plant-create__title">Create Plant</h1>
 
 <div class="form-wrapper">
   <form action="/plants" method="POST" class="form">
@@ -41,7 +41,7 @@
     </div>
 
     <!-- Description -->
-    <!-- <div class="form__input-group">
+    <div class="form__input-group">
       <label for="description" class="form__label">Description</label>
       <div class="form__input-wrapper">
         <div
@@ -63,10 +63,10 @@
           </ul>
         <?php endif; ?>
       </div>
-    </div> -->
+    </div>
 
     <!-- Price -->
-    <!-- <div class="form__input-group">
+    <div class="form__input-group">
       <label for="price" class="form__label">Price</label>
       <div class="form__input-wrapper">
         <div
@@ -90,17 +90,17 @@
         <?php endif; ?>
 
       </div>
-    </div> -->
+    </div>
 
     <!-- Image URL -->
-    <!-- <div class="form__input-group">
+    <div class="form__input-group">
       <label for="img" class="form__label">Image URL</label>
       <div class="form__input-wrapper">
         <div
           class="form__input-container">
           <input type="text" name="img" id="img"
             class="form__input"
-            placeholder="https://whateveruwant.com" required>
+            placeholder="https://whateveruwant.com">
         </div>
 
         <?php if (!empty($errors['img'])) : ?>
@@ -110,7 +110,14 @@
         <?php endif; ?>
 
       </div>
-    </div> -->
+
+      <?php if ($session->has('create-plant_error')) : ?>
+        <p class="form__error">
+          <?= $session->getFlash('create-plant_error') ?>
+        </p>
+
+      <?php endif; ?>
+    </div>
 
     <!-- Submit -->
     <div class="form__button-container">

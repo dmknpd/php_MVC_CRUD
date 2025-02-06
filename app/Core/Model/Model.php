@@ -23,13 +23,15 @@ abstract class Model implements ModelInterface
     return self::db()->selectAll(static::$table);
   }
 
-  public static function allWithJoin(string $joinTable, string $onCondition, array $conditions = []): array
+  public static function allWithJoin(string $joinTable, string $onCondition, array $conditions = [], string $orderBy = 'id', string $direction = "DESC"): array
   {
     return self::db()->selectAllWithJoin(
       static::$table,
       $joinTable,
       $onCondition,
-      $conditions
+      $conditions,
+      $orderBy,
+      $direction
     );
   }
 

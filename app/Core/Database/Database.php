@@ -75,7 +75,7 @@ class Database implements DatabaseInterface
     return $result ?: null;
   }
 
-  public function selectAll(string $table, array $conditions = []): array
+  public function selectAll(string $table, array $conditions = [], string $orderBy = 'id', string $direction = "DESC"): array
   {
     $where = '';
     $params = [];
@@ -89,13 +89,13 @@ class Database implements DatabaseInterface
       $where = 'WHERE ' . implode(' AND ', $whereParts);
     }
 
-    $sql = "SELECT * FROM {$table} {$where}";
+    $sql = "SELECT * FROM {$table} {$where} ORDER BY {$orderBy} {$direction}";
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute($params);
     return $stmt->fetchAll();
   }
 
-  public function selectAllWithJoin(string $table, string $joinTable, string $onCondition, array $conditions = []): array
+  public function selectAllWithJoin(string $table, string $joinTable, string $onCondition, array $conditions = [], string $orderBy = 'id', string $direction = "DESC"): array
   {
     $where = '';
     $params = [];
@@ -111,7 +111,7 @@ class Database implements DatabaseInterface
 
     $sql = "SELECT * FROM {$table} 
             LEFT JOIN {$joinTable} ON {$onCondition} 
-            {$where}";
+            {$where} ORDER BY {$orderBy} {$direction}";
 
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute($params);
