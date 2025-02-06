@@ -58,7 +58,7 @@ class View implements ViewInterface
 
     extract(array_merge($this->defaultData(), $data));
 
-    include_once $filePath;
+    include $filePath;
   }
 
   private function defaultData(): array

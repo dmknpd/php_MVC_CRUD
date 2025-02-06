@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\Plant;
 use Core\Controller\Controller;
 
 class PlantController extends Controller
@@ -9,7 +10,9 @@ class PlantController extends Controller
 
   public function index(): void
   {
-    $this->view('plants.index');
+    $plants = Plant::allWithSeller();
+
+    $this->view('plants.index', ['plants' => $plants]);
   }
 
   public function create(): void

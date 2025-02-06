@@ -64,8 +64,60 @@ main {
   margin-right: auto;
 }
 
+.plant-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.plant-card {
+  display: flex;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  justify-content: space-between;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  background-color: rgb(22, 101, 52);
+  border: 1px solid transparent;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+}
+
+.plant-card:hover {
+  border-color: rgb(34, 197, 94);
+}
+
+.plant-card__left {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.plant-card__title {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+}
+
+.plant-card__description {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.plant-card__right {
+  margin-top: auto;
+}
+
+.plant-card__price {
+  font-weight: normal;
+}
+
 .page-title {
-  margin-bottom: 5rem;
+  margin-bottom: 2.5rem;
   font-size: 2.25rem;
   line-height: 2.5rem;
   font-weight: 700;
