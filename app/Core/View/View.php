@@ -34,11 +34,14 @@ class View implements ViewInterface
       throw new InvalidArgumentException("Invalid path: '{$name}'");
     }
 
-    [$folder, $file] = explode('.', $name);
+    $parts = explode('.', $name);
 
-    if ($file === null) {
+    if (count($parts) < 2) {
       throw new InvalidArgumentException("Invalid page name.");
     }
+
+    $file = array_pop($parts);
+    $folder = implode('/', $parts);
 
     return APP_PATH . "/resources/views/{$folder}/{$file}.php";
   }
