@@ -2,6 +2,7 @@
 
 namespace Core\Auth;
 
+use App\Models\Seller;
 use App\Models\User;
 use Core\Config\Config;
 use Core\Config\ConfigInterface;
@@ -41,6 +42,7 @@ class Auth implements AuthInterface
     return true;
   }
 
+
   public function check(): bool
   {
     return $this->session->has($this->sessionField());
@@ -52,12 +54,23 @@ class Auth implements AuthInterface
       return null;
     }
 
-
     $user =  User::find($this->session->get($this->sessionField()));
 
     return $user ?: null;
   }
 
+  public function seller(): ?array
+  {
+    $user = $this->user();
+
+    if (!$user) {
+      return null;
+    }
+
+    $seller = Seller::findByUserId($user['id']);
+
+    return $seller ?: null;
+  }
 
   public function logout(): void
   {

@@ -10,6 +10,8 @@ interface AuthInterface
 
   public function user(): ?array;
 
+  public function seller(): ?array;
+
   public function logout(): void;
 
   public function table(): string;
