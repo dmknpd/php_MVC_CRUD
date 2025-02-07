@@ -4,6 +4,7 @@ namespace Core\Router;
 
 class Route
 {
+  private array $params = [];
 
   public function __construct(
     private string $uri,
@@ -46,5 +47,26 @@ class Route
   public function hasMiddlewares(): bool
   {
     return ! empty($this->middlewares);
+  }
+
+  public function match(string $uri): bool
+  {
+    $pattern = preg_replace('/\{([\w]+)\}/', '(?P<$1>[^/]+)', $this->uri);
+    $pattern = "#^" . $pattern . "$#";
+
+    if (preg_match($pattern, $uri, $matches)) {
+      foreach ($matches as $key => $match) {
+        if (!is_int($key)) {
+          $this->params[$key] = $match;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
+  public function getParams(): array
+  {
+    return $this->params;
   }
 }

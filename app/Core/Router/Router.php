@@ -3,7 +3,6 @@
 namespace Core\Router;
 
 use Core\Auth\AuthInterface;
-use Core\Database\DatabaseInterface;
 use Core\Redirect\RedirectInterface;
 use Core\Request\RequestInterface;
 use Core\Session\SessionInterface;
@@ -73,8 +72,7 @@ class Router implements RouterInterface
         $this->auth
       );
 
-      // call_user_func([$controller, $action]);
-      $controller->$action();
+      $controller->$action($route->getParams());
     } else {
       call_user_func($route->getAction());
     }
@@ -82,7 +80,14 @@ class Router implements RouterInterface
 
   private function findRoute(string $uri, string $method): Route|false
   {
-    return $this->routes[$method][$uri] ?? false;
+    // return $this->routes[$method][$uri] ?? false;
+
+    foreach ($this->routes[$method] as $route) {
+      if ($route->match($uri)) {
+        return $route;
+      }
+    }
+    return false;
   }
 
   private function notFound(): void
