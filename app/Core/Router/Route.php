@@ -24,6 +24,16 @@ class Route
     return new static($uri, "POST", $action, $middlewares);
   }
 
+  public static function patch(string $uri, $action, array $middlewares = []): static
+  {
+    return new static($uri, "PATCH", $action, $middlewares);
+  }
+
+  public static function destroy(string $uri, $action, array $middlewares = []): static
+  {
+    return new static($uri, "DELETE", $action, $middlewares);
+  }
+
   public function getUri(): string
   {
     return $this->uri;

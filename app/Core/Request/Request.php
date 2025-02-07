@@ -28,6 +28,9 @@ class Request implements RequestInterface
 
   public function method(): string
   {
+    if ($this->input('_method')) {
+      return strtoupper($this->input('_method'));
+    }
     return $this->server['REQUEST_METHOD'];
   }
 

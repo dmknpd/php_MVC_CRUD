@@ -13,7 +13,9 @@ class Router implements RouterInterface
 
   private array $routes = [
     'GET' => [],
-    'POST' => []
+    'POST' => [],
+    'PATCH' => [],
+    'DELETE' => []
   ];
 
   public function __construct(
