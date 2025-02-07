@@ -9,7 +9,6 @@ use Core\Config\ConfigInterface;
 use Core\Config\Config;
 use Core\Database\Database;
 use Core\Database\DatabaseInterface;
-use Core\Model\ModelInterface;
 use Core\Redirect\Redirect;
 use Core\Redirect\RedirectInterface;
 use Core\Request\Request;

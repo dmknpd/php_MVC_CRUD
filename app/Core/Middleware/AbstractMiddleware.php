@@ -10,7 +10,8 @@ abstract class AbstractMiddleware
 {
   public function __construct(
     protected RequestInterface $request,
-    protected RedirectInterface $redirect
+    protected RedirectInterface $redirect,
+    protected AuthInterface $auth
   ) {}
 
   abstract public function handle(): void;

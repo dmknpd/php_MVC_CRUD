@@ -54,13 +54,13 @@ class Router implements RouterInterface
       $this->notFound();
     }
 
-    // if ($route->hasMiddlewares()) {
-    //   foreach ($route->getMiddlewares() as $middleware) {
-    //     $middleware = new $middleware($this->request, $this->redirect);
+    if ($route->hasMiddlewares()) {
+      foreach ($route->getMiddlewares() as $middleware) {
+        $middleware = new $middleware($this->request, $this->redirect, $this->auth);
 
-    //     $middleware->handle();
-    //   }
-    // }
+        $middleware->handle();
+      }
+    }
 
     if (is_array($route->getAction())) {
       [$controller, $action] = $route->getAction();
