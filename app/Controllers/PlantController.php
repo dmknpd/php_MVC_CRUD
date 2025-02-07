@@ -20,6 +20,19 @@ class PlantController extends Controller
     $this->view('plants.create');
   }
 
+  public function show(array $data): void
+  {
+    $id = (int)$data['id'];
+
+    $plant = Plant::find($id);
+
+    if (!$plant) {
+      $this->redirect('/');
+    }
+
+    $this->view('plants.show', ['plant' => $plant]);
+  }
+
   public function store()
   {
     $validation = $this->request()->validate([

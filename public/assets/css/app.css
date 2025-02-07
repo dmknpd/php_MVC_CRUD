@@ -128,8 +128,74 @@ main {
   text-align: center;
 }
 
-.plant-create__title {
+.plant-create__title,
+.plant-info__title {
   margin-bottom: 5rem;
+}
+
+.plant-info__wrapper {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.plant-info__img-wrapper {
+  width: 16rem;
+  height: 16rem;
+  flex-shrink: 0;
+}
+
+.plant-info__img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.plant-info__content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  justify-content: space-between;
+}
+
+.plant-info__text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.plant-info__text-title {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+
+.plant-info__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.plant-info__price {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.plant-info__buttons {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.plant-info__edit {
+  color: rgb(147, 197, 253);
+  text-decoration: none;
+}
+
+.plant-info__delete {
+  color: rgb(239, 68, 68);
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1rem;
 }
 
 .form-wrapper {

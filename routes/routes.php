@@ -10,6 +10,7 @@ use Core\Router\Route;
 return [
   Route::get('/', [PlantController::class, 'index']),
   Route::get('/plants/create', [PlantController::class, 'create'], [AuthMiddleware::class]),
+  Route::get('/plants/{id}', [PlantController::class, 'show']),
   Route::post('/plants', [PlantController::class, 'store']),
 
   Route::get('/register', [RegisterController::class, 'create'], [GuestMiddleware::class]),
@@ -19,5 +20,4 @@ return [
   Route::post('/login', [LoginController::class, 'store'], [GuestMiddleware::class]),
 
   Route::post('/logout', [LoginController::class, 'destroy']),
-
 ];

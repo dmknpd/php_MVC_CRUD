@@ -36,11 +36,6 @@ class Request implements RequestInterface
     return $this->post[$key] ?? $this->get[$key] ?? $default;
   }
 
-  // public function post(): array
-  // {
-  //   return $this->post;
-  // }
-
   public function validate(array $rules): bool
   {
     $data = [];
