@@ -2,6 +2,7 @@
 
 namespace Core\Auth;
 
+use App\Models\Plant;
 use App\Models\Seller;
 use App\Models\User;
 use Core\Config\Config;
@@ -70,6 +71,36 @@ class Auth implements AuthInterface
     $seller = Seller::findByUserId($user['id']);
 
     return $seller ?: null;
+  }
+
+  public function plants(): ?array
+  {
+    $seller = $this->seller();
+
+    if (!$seller) {
+      return null;
+    }
+
+    $plants = Plant::findBySeller($seller['id']);
+
+    return $plants ?: null;
+  }
+
+  public function canEdit(int $plant_id): bool
+  {
+    $plants = $this->plants();
+
+    if (!$plants) {
+      return false;
+    }
+
+    foreach ($plants as $plant) {
+      if ($plant['id'] === $plant_id) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public function logout(): void

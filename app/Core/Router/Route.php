@@ -29,7 +29,7 @@ class Route
     return new static($uri, "PATCH", $action, $middlewares);
   }
 
-  public static function destroy(string $uri, $action, array $middlewares = []): static
+  public static function delete(string $uri, $action, array $middlewares = []): static
   {
     return new static($uri, "DELETE", $action, $middlewares);
   }

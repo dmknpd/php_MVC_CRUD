@@ -22,7 +22,7 @@ class PlantController extends Controller
 
   public function show(array $data): void
   {
-    $id = (int)$data['id'];
+    $id = $data['id'];
 
     $plant = Plant::find($id);
 
@@ -33,7 +33,49 @@ class PlantController extends Controller
     $this->view('plants.show', ['plant' => $plant]);
   }
 
-  public function store()
+  public function edit(array $data): void
+  {
+    $id = $data['id'];
+
+    $plant = Plant::find($id);
+
+    if (!$plant) {
+      $this->redirect('/');
+    }
+
+    $this->view('plants.edit', ['plant' => $plant]);
+  }
+
+  public function update(array $data): void
+  {
+    $id = $data['id'];
+
+    $validation = $this->request()->validate([
+      'title' => ['required', 'min:3', 'max:32'],
+      'description' => ['required', 'min:3', 'max:5'],
+      'price' => ['required', 'numeric', 'positive'],
+    ]);
+
+    if (!$validation) {
+      foreach ($this->request()->errors() as $field => $errors) {
+        $this->session()->set($field, $errors);
+      }
+      $this->redirect("/plants/{$id}/edit");
+    }
+
+    $newData = [
+      'title' => $this->request()->input('title'),
+      'description' => $this->request()->input('description'),
+      'price' => $this->request()->input('price')
+    ];
+
+
+    Plant::update($id, $newData);
+
+    $this->redirect("/plants/{$id}");
+  }
+
+  public function store(): void
   {
     $validation = $this->request()->validate([
       'title' => ['required', 'min:3', 'max:32'],
@@ -66,6 +108,15 @@ class PlantController extends Controller
     Plant::create($data);
 
     //TODO: add success notification
+
+    $this->redirect('/');
+  }
+
+  public function destroy(array $data): void
+  {
+    $id = $data['id'];
+
+    Plant::delete($id);
 
     $this->redirect('/');
   }

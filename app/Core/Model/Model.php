@@ -3,12 +3,13 @@
 namespace Core\Model;
 
 use Core\Database\Database;
+use Core\Database\DatabaseInterface;
 
 abstract class Model implements ModelInterface
 {
   protected static string $table;
 
-  protected static function db(): Database
+  protected static function db(): DatabaseInterface
   {
     return Database::getInstance();
   }
@@ -23,12 +24,13 @@ abstract class Model implements ModelInterface
     return self::db()->selectAll(static::$table);
   }
 
-  public static function allWithJoin(string $joinTable, string $onCondition, array $conditions = [], string $orderBy = 'id', string $direction = "DESC"): array
+  public static function allWithJoin(string $joinTable, string $onCondition, array $columns = [], array $conditions = [], string $orderBy = 'id', string $direction = "DESC"): array
   {
     return self::db()->selectAllWithJoin(
       static::$table,
       $joinTable,
       $onCondition,
+      $columns,
       $conditions,
       $orderBy,
       $direction

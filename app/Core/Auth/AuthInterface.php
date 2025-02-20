@@ -12,6 +12,10 @@ interface AuthInterface
 
   public function seller(): ?array;
 
+  public function plants(): ?array;
+
+  public function canEdit(int $plant_id): bool;
+
   public function logout(): void;
 
   public function table(): string;

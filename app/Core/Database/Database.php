@@ -95,7 +95,7 @@ class Database implements DatabaseInterface
     return $stmt->fetchAll();
   }
 
-  public function selectAllWithJoin(string $table, string $joinTable, string $onCondition, array $conditions = [], string $orderBy = 'id', string $direction = "DESC"): array
+  public function selectAllWithJoin(string $table, string $joinTable, string $onCondition, array $columns = [], array $conditions = [], string $orderBy = 'id', string $direction = "DESC"): array
   {
     $where = '';
     $params = [];
@@ -109,8 +109,10 @@ class Database implements DatabaseInterface
       $where = 'WHERE ' . implode(' AND ', $whereParts);
     }
 
-    $sql = "SELECT * FROM {$table} 
-            LEFT JOIN {$joinTable} ON {$onCondition} 
+    $selectColumns = empty($columns) ? "{$table}.*, {$joinTable}.*" : implode(", ", $columns);
+
+    $sql = "SELECT {$selectColumns} FROM {$table} 
+            JOIN {$joinTable} ON {$onCondition} 
             {$where} ORDER BY {$orderBy} {$direction}";
 
     $stmt = $this->pdo->prepare($sql);

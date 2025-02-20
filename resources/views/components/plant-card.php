@@ -4,7 +4,6 @@
  * @var \Core\View\ViewInterface $view
  * @var array $plant
  */
-
 ?>
 
 <a href="/plants/<?= htmlspecialchars($plant['id']) ?>"

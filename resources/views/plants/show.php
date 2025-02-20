@@ -24,10 +24,11 @@
       <p class="plant-info__price">$<?= htmlspecialchars($plant['price']) ?></p>
 
 
-      <?php if ($plant['seller_id'] === $auth->user()['id']) : ?>
+      <?php if ($auth->canEdit($plant['id'])) : ?>
         <div class="plant-info__buttons">
           <a class="plant-info__edit" href="/plants/<?= htmlspecialchars($plant['id']) ?>/edit">edit</a>
           <form action="/plants/<?= htmlspecialchars($plant['id']) ?>" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
             <button class="plant-info__delete">delete</button>
           </form>
         </div>
